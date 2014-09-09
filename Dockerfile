@@ -7,7 +7,8 @@ MAINTAINER y0ug
 RUN apt-get update && apt-get upgrade -yq
 
 RUN apt-get install -yq \
-  mingw-w64 mingw32 binutils-mingw-w64 x11-apps xutils
+  mingw-w64 mingw32 binutils-mingw-w64
+  
 
 RUN mkdir -p /var/tools/ && chown y0ug:y0ug /var/tools
 ADD install.sh /tmp/
@@ -15,6 +16,7 @@ USER y0ug
 RUN /tmp/install.sh
 USER root
 
+sudo pip install --upgrade python-pip netifaces requests
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 22

@@ -11,6 +11,7 @@ perm:
 
 run:
 	docker run -d \
+		-privileged \
 		-v $(VOL_DIR)/$(NAME)_home:/home/y0ug \
 		-v $(VOL_DIR)/www:/var/www \
 		-v $(VOL_DIR)/syslog-ng:/etc/syslog-ng \
