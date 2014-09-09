@@ -125,7 +125,7 @@ if [ ! -d "$TARGET" ]; then
   mkdir build
   cd build
   cmake ../ && make
-  sudo ln -s $TARGET/rp-lin-x64 $LOCAL_BIN
+  sudo ln -s $TARGET/bin/rp-lin-x64 $LOCAL_BIN
 fi
 
 TARGET=$DST/clusterd
@@ -221,7 +221,7 @@ if [ ! -d "$TARGET" ]; then
   wget http://ha.ckers.org/fierce/fierce.pl
   wget http://ha.ckers.org/fierce/hosts.txt
   chmod 755 fierce.pl
-  sudo ln -s $(pwd)/fierce.pl $LOCAL_BIN
+  sudo ln -s $TARGET/fierce.pl $LOCAL_BIN
 fi
 
 TARGET=$DST/wfuzz
@@ -234,7 +234,7 @@ if [ ! -d "$TARGET" ]; then
   mv wfuzz-read-only $TARGET
   sudo pip install pycurl
   chmod 755 wfuzz/wfuzz.py
-  sudo ln -s $(pwd)/wfuzz/wfuzz.py $LOCAL_BIN
+  sudo ln -s $TARGET/wfuzz.py $LOCAL_BIN
 fi
 
 TARGET=$DST/nikto
@@ -245,6 +245,5 @@ if [ ! -d "$TARGET" ]; then
   tar xvf $VER.tar.gz
   rm $VER.tar.gz
   mv $VER nikto
-  cd $TARGET
-  chmod +x nikto.pl
+   chmod +x $TARGET/nikto.pl
 fi
