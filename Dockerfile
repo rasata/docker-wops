@@ -7,7 +7,8 @@ MAINTAINER y0ug
 RUN apt-get update && apt-get upgrade -yq
 
 RUN apt-get install -yq \
-  mingw-w64 mingw32 binutils-mingw-w64
+  mingw-w64 mingw32 binutils-mingw-w64 \
+  cadaver vncsnapshot
   
 
 RUN mkdir -p /var/tools/ && chown y0ug:y0ug /var/tools
@@ -16,11 +17,11 @@ USER y0ug
 RUN /tmp/install.sh
 USER root
 
-sudo pip install --upgrade python-pip netifaces requests
+sudo pip install --upgrade pip netifaces requests
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 22
 
-VOLUME ['/var/log', '/home/y0ug', '/var/lib/bitlbee']
+VOLUME ['/var/log', '/home/y0ug',]
 
 CMD [ "/usr/bin/supervisord",  "-c",  "/etc/supervisor/supervisord.conf"]
