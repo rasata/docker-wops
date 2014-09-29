@@ -1,6 +1,6 @@
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 VOL_DIR := /var/volumes
-NAME := whops
+NAME := wops
 
 build:
 	docker build -t y0ug/$(NAME) $(ROOT_DIR)
