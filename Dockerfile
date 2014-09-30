@@ -10,7 +10,7 @@ RUN apt-get install -yq \
   iptables openvpn \
   mingw-w64 mingw32 binutils-mingw-w64 \
   cadaver vncsnapshot proxychains tsocks \
-  polipo privoxy samba
+  polipo privoxy samba firefox
 
 RUN pip install --upgrade pip netifaces requests
 RUN pip install impacket
