@@ -5,6 +5,27 @@ DST=/var/tools
 LOCAL_BIN="/usr/local/bin/"
 
 
+TARGET=$DST/scapy-latest
+if [ ! -d "$TARGET" ]; then
+  cd $DST
+  ARCHIVE=scapy-latest.tar.gz
+  wget http://www.secdev.org/projects/scapy/files/$ARCHIVE
+  mkdir ${ARCHIVE%.tar*}
+  tar --extract --file=${ARCHIVE} --strip-components=1 --directory=${ARCHIVE%.tar*}
+  rm $ARCHIVE
+  cd $TARGET
+  python setup.py build
+  sudo python setup.py install
+fi
+
+TARGET=$DST/Responder
+if [ ! -d "$TARGET" ]; then
+  cd $DST
+  git clone https://github.com/SpiderLabs/Responder.git
+  chmod +x $TARGET/Responder.py
+  sudo ln -s $TARGET/Responder.py $LOCAL_BIN
+fi
+
 TARGET=$DST/msf
 if [ ! -d "$TARGET" ]; then
   sudo apt-get -yq install \
@@ -59,9 +80,10 @@ TARGET=$DST/DirBuster
 VER=DirBuster-0.12
 if [ ! -d "$TARGET" ]; then
   cd $DST
-  wget http://sourceforge.net/projects/dirbuster/files/DirBuster%20%28jar%20%2B%20lists%29/0.12/$VER.tar.bz2
-  tar xvf DirBuster-0.12.tar.bz2
+  wget http://sourceforge.net/projects/dirbuster/files/DirBuster%20%28jar%20%2B%20lists%29/0.12/${VER}.tar.bz2
+  tar xvf ${VER}.tar.bz2
   mv $VER $TARGET
+  rm ${VER}.tar.bz2
   cd $TARGET
   cat > dirbuster.sh <<EOF
 #!/bin/bash
@@ -188,6 +210,15 @@ if [ ! -d "$TARGET" ]; then
   sudo ln -s $(pwd)/wpscan.rb $LOCAL_BIN
 fi
 
+TARGET=$DST/wpyscan
+if [ ! -d "$TARGET" ]; then
+  cd $DST
+  git clone https://github.com/Ganapati/wpyscan.git
+  sudo pip install -r $TARGET/requirements.txt
+  sudo chmod +x $TARGET/wpyscan.py
+  sudo ln -s $TARGET/wpyscan.py $LOCAL_BIN
+fi
+
 TARGET=$DST/weevely
 if [ ! -d "$TARGET" ]; then
   cd $DST
@@ -238,12 +269,7 @@ if [ ! -d "$TARGET" ]; then
 fi
 
 TARGET=$DST/nikto
-VER=nikto-2.1.5
 if [ ! -d "$TARGET" ]; then
   cd $DST
-  wget https://www.cirt.net/nikto/$VER.tar.gz
-  tar xvf $VER.tar.gz
-  rm $VER.tar.gz
-  mv $VER nikto
-   chmod +x $TARGET/nikto.pl
+  git clone https://github.com/sullo/nikto.git
 fi
